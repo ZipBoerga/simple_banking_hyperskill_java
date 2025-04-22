@@ -1,0 +1,20 @@
+package banking.infrastracture.repository;
+
+import banking.domain.model.Card;
+import banking.domain.repository.CardRepo;
+
+import java.util.HashMap;
+
+public class FakeCardRepo implements CardRepo {
+    private final HashMap<String, Card> cards = new HashMap<>();
+
+    @Override
+    public void saveCard(Card card) {
+        cards.put(card.getCardNumber(), card);
+    }
+
+    @Override
+    public Card getCard(String cardNumber) {
+        return cards.get(cardNumber);
+    }
+}
