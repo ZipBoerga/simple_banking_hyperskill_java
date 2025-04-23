@@ -1,4 +1,4 @@
-package banking.interfaces.states;
+package banking.presentation.states;
 
 public class StateHandlingResult {
     public final AppState nextState;

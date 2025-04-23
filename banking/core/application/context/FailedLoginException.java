@@ -1,4 +1,4 @@
-package banking.core.context;
+package banking.core.application.context;
 
 public class FailedLoginException extends Exception {
     public FailedLoginException() {

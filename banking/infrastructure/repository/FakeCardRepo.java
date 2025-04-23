@@ -1,7 +1,7 @@
-package banking.infrastracture.repository;
+package banking.infrastructure.repository;
 
-import banking.domain.model.Card;
-import banking.domain.repository.CardRepo;
+import banking.core.domain.model.Card;
+import banking.core.domain.repository.CardRepo;
 
 import java.util.HashMap;
 

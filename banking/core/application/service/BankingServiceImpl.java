@@ -1,7 +1,7 @@
-package banking.core.service;
+package banking.core.application.service;
 
-import banking.domain.model.Card;
-import banking.domain.repository.CardRepo;
+import banking.core.domain.model.Card;
+import banking.core.domain.repository.CardRepo;
 
 public class BankingServiceImpl implements BankingService {
 
@@ -13,7 +13,7 @@ public class BankingServiceImpl implements BankingService {
 
     @Override
     public Card createCard() {
-        final Card card = CardGenerator.generateCard();
+        final Card card = CardGeneratorService.generateCard();
         cardRepo.saveCard(card);
         return card;
     }

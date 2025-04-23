@@ -1,4 +1,4 @@
-package banking.domain.model;
+package banking.core.domain.model;
 
 public class Card {
     private final String cardNumber;

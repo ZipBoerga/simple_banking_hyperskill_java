@@ -1,7 +1,7 @@
-package banking.core.context;
+package banking.core.application.context;
 
-import banking.core.service.BankingService;
-import banking.domain.model.Card;
+import banking.core.application.service.BankingService;
+import banking.core.domain.model.Card;
 
 public class AppContext {
     final private BankingService bankingService;

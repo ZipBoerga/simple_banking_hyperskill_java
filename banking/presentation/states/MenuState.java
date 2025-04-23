@@ -1,7 +1,7 @@
-package banking.interfaces.states;
+package banking.presentation.states;
 
-import banking.core.context.AppContext;
-import banking.domain.model.Card;
+import banking.core.application.context.AppContext;
+import banking.core.domain.model.Card;
 
 public final class MenuState extends AppState {
 

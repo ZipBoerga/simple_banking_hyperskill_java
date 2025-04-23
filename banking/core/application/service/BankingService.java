@@ -1,6 +1,6 @@
-package banking.core.service;
+package banking.core.application.service;
 
-import banking.domain.model.Card;
+import banking.core.domain.model.Card;
 
 public interface BankingService {
     Card createCard();

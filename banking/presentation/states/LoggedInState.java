@@ -1,6 +1,6 @@
-package banking.interfaces.states;
+package banking.presentation.states;
 
-import banking.core.context.AppContext;
+import banking.core.application.context.AppContext;
 
 public class LoggedInState extends AppState {
     final AppContext appContext;

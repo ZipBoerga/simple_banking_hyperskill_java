@@ -1,7 +1,7 @@
-package banking.interfaces.states;
+package banking.presentation.states;
 
-import banking.core.context.AppContext;
-import banking.core.context.FailedLoginException;
+import banking.core.application.context.AppContext;
+import banking.core.application.context.FailedLoginException;
 
 public class CardPinInputState extends AppState {
     final AppContext appContext;

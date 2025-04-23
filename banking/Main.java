@@ -1,12 +1,11 @@
 package banking;
 
-import banking.core.context.AppContext;
-import banking.core.service.BankingService;
-import banking.core.service.BankingServiceImpl;
-import banking.domain.repository.CardRepo;
-import banking.infrastracture.repository.FakeCardRepo;
-import banking.interfaces.UserCLI;
-import banking.interfaces.states.StateHandlingResult;
+import banking.core.application.context.AppContext;
+import banking.core.application.service.BankingService;
+import banking.core.application.service.BankingServiceImpl;
+import banking.core.domain.repository.CardRepo;
+import banking.infrastructure.repository.FakeCardRepo;
+import banking.presentation.UserCLI;
 
 public class Main {
     public static void main(String[] args) {

@@ -1,4 +1,4 @@
-package banking.interfaces.states;
+package banking.presentation.states;
 
 public abstract class AppState {
     public abstract String prompt();

@@ -1,6 +1,6 @@
-package banking.domain.repository;
+package banking.core.domain.repository;
 
-import banking.domain.model.Card;
+import banking.core.domain.model.Card;
 
 public interface CardRepo {
     void saveCard(Card card);

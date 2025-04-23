@@ -1,10 +1,10 @@
-package banking.interfaces;
+package banking.presentation;
 
-import banking.core.context.AppContext;
-import banking.interfaces.states.AppState;
-import banking.interfaces.states.ExitApp;
-import banking.interfaces.states.MenuState;
-import banking.interfaces.states.StateHandlingResult;
+import banking.core.application.context.AppContext;
+import banking.presentation.states.AppState;
+import banking.presentation.states.ExitApp;
+import banking.presentation.states.MenuState;
+import banking.presentation.states.StateHandlingResult;
 
 import java.util.Scanner;
 
