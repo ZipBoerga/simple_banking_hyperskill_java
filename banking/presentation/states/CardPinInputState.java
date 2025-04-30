@@ -12,7 +12,7 @@ public class CardPinInputState extends AppState {
 
     @Override
     public String prompt() {
-        return "Enter your card number:";
+        return "Enter your PIN:";
     }
 
     @Override
@@ -25,6 +25,6 @@ public class CardPinInputState extends AppState {
         } catch (Exception e) {
             throw new RuntimeException(e);
         }
-        return new StateHandlingResult(new LoggedInState(appContext), "You have successfully logged in!");
+        return new StateHandlingResult(new AccountMenuState(appContext), "You have successfully logged in!");
     }
 }

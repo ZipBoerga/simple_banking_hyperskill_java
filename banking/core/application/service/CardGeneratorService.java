@@ -26,6 +26,16 @@ public class CardGeneratorService {
         return new Card(id, number, pin);
     }
 
+    public static boolean isLuhn(String cardNumber) {
+        byte lastDigit = (byte) (cardNumber.charAt(cardNumber.length() - 1) - '0');
+        int length = cardNumber.length();
+        byte checksum = 0;
+        for (int i = 0; i < length - 1; i++) {
+            checksum = getChecksum(cardNumber, checksum, i);
+        }
+        return (checksum  + lastDigit) % 10 == 0;
+    }
+
     private int generateId() {
         StringBuilder idBuilder = new StringBuilder();
 
@@ -84,16 +94,21 @@ public class CardGeneratorService {
         int length = incompleteNumber.length();
         byte checksum = 0;
         for (int i = 0; i < length; i++) {
-            byte digit = (byte) (incompleteNumber.charAt(i) - '0');
-            if (i % 2 == 0) {
-                digit = (byte) (digit * 2);
-                if (digit > 9) {
-                    digit = (byte) (digit - 9);
-                }
-            }
-            checksum += digit;
+            checksum = getChecksum(incompleteNumber, checksum, i);
         }
         byte checksumEndDigit = (byte) (checksum % 10);
         return (byte) (checksumEndDigit == 0 ? 0: 10 - checksumEndDigit);
+    }
+
+    private static byte getChecksum(String incompleteNumber, byte checksum, int i) {
+        byte digit = (byte) (incompleteNumber.charAt(i) - '0');
+        if (i % 2 == 0) {
+            digit = (byte) (digit * 2);
+            if (digit > 9) {
+                digit = (byte) (digit - 9);
+            }
+        }
+        checksum += digit;
+        return checksum;
     }
 }

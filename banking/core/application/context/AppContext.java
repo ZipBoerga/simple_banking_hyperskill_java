@@ -2,17 +2,17 @@ package banking.core.application.context;
 
 import banking.core.application.service.BankingService;
 import banking.core.domain.model.Card;
+import banking.presentation.states.ContextException;
 
 public class AppContext {
     final private BankingService bankingService;
-    private boolean loggedIn;
     private Card currentCard;
     private String loginCardNumber;
     private String loginCardPin;
+    private String transferToCardNumber;
 
     public AppContext(final BankingService bankingService) {
         this.bankingService = bankingService;
-        this.loggedIn = false;
     }
 
     public void setLoginCardNumber(String loginCardNumber) {
@@ -21,6 +21,19 @@ public class AppContext {
 
     public void setLoginCardPin(String loginCardPIN) {
         this.loginCardPin = loginCardPIN;
+    }
+
+    public void setTransferToCardNumber(String transferToCardNumber) throws ContextException {
+        if (currentCard.getNumber().equals(transferToCardNumber)) {
+            throw new ContextException("You can't transfer money to the same account!");
+        }
+        if (!this.bankingService.isValidCard(transferToCardNumber)) {
+            throw new ContextException("Probably you made a mistake in the card number. Please try again!");
+        }
+        if (!this.bankingService.isCardExist(transferToCardNumber)) {
+            throw new ContextException("Such a card does not exist.");
+        }
+        this.transferToCardNumber = transferToCardNumber;
     }
 
     public Card createCard() {
@@ -43,12 +56,27 @@ public class AppContext {
         this.loginCardNumber = null;
         this.loginCardPin = null;
         this.currentCard = result;
-        this.loggedIn = true;
     }
 
     public void logout() {
         this.currentCard = null;
-        this.loggedIn = false;
     }
 
+    public void topUpBalance(int amount) {
+        this.currentCard = this.bankingService.addIncome(currentCard.getNumber(), amount);
+    }
+
+    public void transfer(int amount) throws ContextException {
+        if (amount > this.currentCard.getBalance()) {
+            this.transferToCardNumber = null;
+            throw new ContextException("Not enough money!");
+        }
+        this.currentCard = bankingService.transfer(currentCard.getNumber(), this.transferToCardNumber, amount);
+        this.transferToCardNumber = null;
+    }
+
+    public void deleteCard() {
+        this.bankingService.deleteCard(this.currentCard.getNumber());
+        this.currentCard = null;
+    }
 }

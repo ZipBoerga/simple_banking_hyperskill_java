@@ -13,9 +13,10 @@ public final class MenuState extends AppState {
 
     @Override
     public String prompt() {
-        return "1. Create an account\n" +
-                "2. Log into account\n" +
-                "0. Exit";
+        return """
+                1. Create an account
+                2. Log into account
+                0. Exit""";
     }
 
     @Override
@@ -30,7 +31,7 @@ public final class MenuState extends AppState {
                         card.getPin();
                 return new StateHandlingResult(new MenuState(appContext), output);
             case "2":
-                return new StateHandlingResult(new CardNumberInputState(appContext), null);
+                return new StateHandlingResult(new LoginCardNumInputState(appContext), null);
             case "0":
                 throw new ExitApp();
             default:

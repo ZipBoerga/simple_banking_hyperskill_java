@@ -2,10 +2,10 @@ package banking.presentation.states;
 
 import banking.core.application.context.AppContext;
 
-public class CardNumberInputState extends AppState {
+public class LoginCardNumInputState extends AppState {
     final AppContext appContext;
 
-    public CardNumberInputState(AppContext clientContext) {
+    public LoginCardNumInputState(AppContext clientContext) {
         this.appContext = clientContext;
     }
 

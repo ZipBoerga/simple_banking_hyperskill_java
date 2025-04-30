@@ -2,7 +2,6 @@ package banking;
 
 import banking.core.application.context.AppContext;
 import banking.core.application.service.BankingService;
-import banking.core.application.service.BankingServiceImpl;
 import banking.core.application.service.CardGeneratorService;
 import banking.infrastructure.repository.DatabaseCardRepo;
 import banking.presentation.UserCLI;
@@ -14,7 +13,7 @@ public class Main {
         cardRepo.initiateDb();
 
         CardGeneratorService cardGeneratorService = new CardGeneratorService(cardRepo);
-        BankingService bankingService = new BankingServiceImpl(cardRepo, cardGeneratorService);
+        BankingService bankingService = new BankingService(cardRepo, cardGeneratorService);
         AppContext appContext = new AppContext(bankingService);
         UserCLI cli = new UserCLI(appContext);
 
