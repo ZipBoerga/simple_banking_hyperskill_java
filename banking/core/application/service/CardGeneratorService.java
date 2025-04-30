@@ -1,39 +1,72 @@
 package banking.core.application.service;
 
-import java.util.HashSet;
 import java.util.Random;
-import java.util.Set;
 
 import banking.core.domain.model.Card;
+import banking.core.domain.repository.CardRepo;
 
 public class CardGeneratorService {
-    public static final String PREFIX = "400000";
-    public static final int NUMBER_LENGTH = 16;
-    public static final int PIN_LENGTH = 4;
-    private static final Set<String> EXISTING_NUMBERS = new HashSet<>();
+    private static final String PREFIX = "400000";
+    private static final int NUMBER_LENGTH = 16;
+    private static final int PIN_LENGTH = 4;
+    private static final int ID_LENGTH = 7;
+    private static final Random random = new Random();
 
-    public static Card generateCard()  {
-        String number = generateNumber();
-        String pin = generatePin();
-        return new Card(number, pin);
+
+    private final CardRepo cardRepo;
+
+    public CardGeneratorService(CardRepo cardRepo) {
+        this.cardRepo = cardRepo;
     }
 
-    private static String generateNumber() {
-        Random rand = new Random();
+    public Card generateCard()  {
+        int id = generateId();
+        String number = generateNumber();
+        String pin = generatePin();
+        return new Card(id, number, pin);
+    }
+
+    private int generateId() {
+        StringBuilder idBuilder = new StringBuilder();
+
+        while (idBuilder.length() < ID_LENGTH) {
+            idBuilder.append(random.nextInt(10));
+        }
+
+        int id = Integer.parseInt(idBuilder.toString());
+
+        Card[] existingCards = cardRepo.getCards();
+        for (Card card : existingCards) {
+            if (card.getId() == id) {
+                return generateId();
+            }
+        }
+
+        return id;
+    }
+
+    // In very unlikely situations recursion to create another, non-repeating number may actually be used,
+    // and the whole amount of cards present in DB can actually be put in heap twice... or more, and if there are lots
+    // of data, it may create an overhead. The way to optimize it is to use for-loop instead of recursion.
+    // but this is highly unlikely. So sticking with an elegant way. Still, it is a good consideration for a
+    // bigger scale. Same for Id
+    private String generateNumber() {
         StringBuilder cardNumberBuilder = new StringBuilder(PREFIX);
 
         while (cardNumberBuilder.length() < NUMBER_LENGTH - 1) {
-            cardNumberBuilder.append(rand.nextInt(10));
+            cardNumberBuilder.append(random.nextInt(10));
         }
 
         String incompleteNumber = cardNumberBuilder.toString();
         String number = incompleteNumber + String.valueOf(generateChecksumDigit(incompleteNumber));
 
-        if (EXISTING_NUMBERS.contains(number)) {
-            return generateNumber();
+        Card[] existingCards = cardRepo.getCards();
+        for (Card card : existingCards) {
+            if (card.getNumber().equals(number)) {
+                return generateNumber();
+            }
         }
 
-        EXISTING_NUMBERS.add(number);
         return number;
     }
 

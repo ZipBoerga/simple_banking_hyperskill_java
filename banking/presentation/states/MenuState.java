@@ -25,9 +25,9 @@ public final class MenuState extends AppState {
                 Card card = this.appContext.createCard();
                 String output = "Your card has been created\n" +
                         "Your card number:\n" +
-                        card.getCardNumber() +
+                        card.getNumber() +
                         "\nYour card PIN:\n" +
-                        card.getCardPin();
+                        card.getPin();
                 return new StateHandlingResult(new MenuState(appContext), output);
             case "2":
                 return new StateHandlingResult(new CardNumberInputState(appContext), null);

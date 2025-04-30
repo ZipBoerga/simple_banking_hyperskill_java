@@ -3,14 +3,18 @@ package banking;
 import banking.core.application.context.AppContext;
 import banking.core.application.service.BankingService;
 import banking.core.application.service.BankingServiceImpl;
-import banking.core.domain.repository.CardRepo;
-import banking.infrastructure.repository.FakeCardRepo;
+import banking.core.application.service.CardGeneratorService;
+import banking.infrastructure.repository.DatabaseCardRepo;
 import banking.presentation.UserCLI;
 
 public class Main {
     public static void main(String[] args) {
-        CardRepo cardRepo = new FakeCardRepo();
-        BankingService bankingService = new BankingServiceImpl(cardRepo);
+        String filePath = args[1];
+        DatabaseCardRepo cardRepo = new DatabaseCardRepo(filePath);
+        cardRepo.initiateDb();
+
+        CardGeneratorService cardGeneratorService = new CardGeneratorService(cardRepo);
+        BankingService bankingService = new BankingServiceImpl(cardRepo, cardGeneratorService);
         AppContext appContext = new AppContext(bankingService);
         UserCLI cli = new UserCLI(appContext);
 
